@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TechJobsMVCAutograded6.Data;
 using TechJobsMVCAutograded6.Models;
 
@@ -44,6 +40,18 @@ public class ListController : Controller
     // TODO #2 - Complete the Jobs action method
     public IActionResult Jobs(string column, string value)
     {
+        List<string> jobs = new List<string>();
+
+        if (value == "all")
+        {
+            //jobs.Add(JobData.FindAll());
+            //jobs = JobData.FindAll();
+        }
+        else if (value == "employer")
+        {
+            ViewBag.job = JobData.FindByColumnAndValue(ViewBag.columns, column);
+        }
+
         return View();
     }
 }
