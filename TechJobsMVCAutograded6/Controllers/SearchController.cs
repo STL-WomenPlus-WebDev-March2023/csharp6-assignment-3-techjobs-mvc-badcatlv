@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using TechJobsMVCAutograded6.Data;
 using TechJobsMVCAutograded6.Models;
 
@@ -21,7 +17,7 @@ public class SearchController : Controller
     public IActionResult Results(string searchType, string searchTerm)
     {
         List<Job> jobs = new List<Job>();
-        if (searchType == "All")
+        if (searchType == "All" || string.IsNullOrEmpty(searchTerm))
         {
             jobs = JobData.FindAll();
         }
@@ -29,9 +25,10 @@ public class SearchController : Controller
         {
             jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
         }
+        ViewBag.columns = ListController.ColumnChoices;
         ViewBag.title = searchTerm + " in " + searchType;
         ViewBag.jobs = jobs;
-        return View();
+        return View("Index");
     }
 }
 
