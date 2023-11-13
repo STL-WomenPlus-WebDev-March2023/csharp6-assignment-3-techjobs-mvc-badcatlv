@@ -25,8 +25,10 @@ public class SearchController : Controller
         {
             jobs = JobData.FindByColumnAndValue(searchType, searchTerm);
         }
+        
+        ViewBag.search = searchTerm;
         ViewBag.columns = ListController.ColumnChoices;
-        ViewBag.title = searchTerm + " in " + searchType;
+        ViewBag.title = "Searching " + searchType;
         ViewBag.jobs = jobs;
         return View("Index");
     }
