@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Security.Cryptography.X509Certificates;
 using TechJobsMVCAutograded6.Data;
 using TechJobsMVCAutograded6.Models;
 
@@ -22,7 +19,7 @@ public class ListController : Controller
         };
     internal static Dictionary<string, List<JobField>> TableChoices = new Dictionary<string, List<JobField>>()
         {
-            //{"all", "View All"},
+            //{"all", JobData.FindAll() },
             {"employer", JobData.GetAllEmployers()},
             {"location", JobData.GetAllLocations()},
             {"positionType", JobData.GetAllPositionTypes()},
@@ -37,6 +34,7 @@ public class ListController : Controller
         ViewBag.locations = JobData.GetAllLocations();
         ViewBag.positionTypes = JobData.GetAllPositionTypes();
         ViewBag.skills = JobData.GetAllCoreCompetencies();
+        ViewBag.jobs = JobData.FindAll();
 
         return View();
     }
@@ -44,7 +42,19 @@ public class ListController : Controller
     // TODO #2 - Complete the Jobs action method
     public IActionResult Jobs(string column, string value)
     {
+        List<Job> jobs = new List<Job>();
+        if (column == "All")
+        {
+            jobs = JobData.FindAll();           
+        }
+        else
+        {
+            jobs = JobData.FindByColumnAndValue(column, value);
+        }
+        ViewBag.title = value;
+        ViewBag.jobs = jobs;
         return View();
+        
     }
 }
 

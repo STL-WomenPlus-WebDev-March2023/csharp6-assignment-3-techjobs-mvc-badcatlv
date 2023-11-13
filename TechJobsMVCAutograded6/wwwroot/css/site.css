@@ -16,3 +16,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+h1 {
+    color: dimgray;
+    text-decoration:underline;
+}
+
+th {
+    font: bold;
+}
+
+td {
+    font: bold;
+}
